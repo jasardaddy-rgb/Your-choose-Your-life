@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>人生模拟器 V22</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<h1>🌌 人生RPG：章节系统版</h1>
+
+<!-- 📖 章节 -->
+<div class="chapter">
+📘 当前章节：<span id="chapter">第一章：普通人生</span>
+</div>
+
+<!-- 🧠 状态 -->
+<div class="hud">
+🧠 <span id="iq">0</span> |
+💰 <span id="money">0</span> |
+❤️ <span id="health">100</span>
+</div>
+
+<!-- 🗺️ 地图 -->
+<div class="map">
+
+<button onclick="move('school')">🏫 学校</button>
+<button onclick="move('company')">🏢 公司</button>
+<button onclick="move('street')">🌆 城市</button>
+<button onclick="move('secret')">🌌 隐藏区</button>
+
+<p>📍 <span id="place">城市中心</span></p>
+
+</div>
+
+<!-- 👥 NPC -->
+<div class="card">
+<h2>👥 NPC互动</h2>
+<p id="npc">暂无NPC</p>
+<button onclick="talk()">💬 对话</button>
+</div>
+
+<!-- 💾 存档 -->
+<div class="card">
+<h2>💾 存档系统</h2>
+<button onclick="save()">保存</button>
+<button onclick="load()">读取</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
