@@ -1,103 +1,123 @@
-// ===== 状态 =====
-let iq = 0;
-let money = 0;
-let health = 100;
-
-let chapter = 1;
-let place = "城市";
-
-// ===== NPC =====
-let NPC = {
-  name: "陌生人",
-  love: 0,
-  mood: "neutral",
-  memory: []
+// 🌍 世界
+let world = {
+  order: 50,
+  chaos: 50,
+  tech: 50
 };
 
-// ===== 章节系统（V22核心🔥）=====
-function updateChapter() {
+// 🏛 国家力量
+let nations = {
+  red: 50,
+  blue: 50,
+  green: 50
+};
 
-  if (iq > 10) chapter = 2;
-  if (money > 10) chapter = 3;
-  if (health < 30) chapter = 4;
+// 🗺 地图（200格）
+let map = [];
 
-  const chapters = [
-    "第一章：普通人生",
-    "第二章：选择未来",
-    "第三章：社会现实",
-    "第四章：危机人生",
-    "终章：结局"
-  ];
+// ⚔️ 初始化地图
+function init() {
 
-  document.getElementById("chapter").innerText =
-    chapters[chapter - 1];
+  let m = document.getElementById("map");
+
+  for (let i = 0; i < 200; i++) {
+
+    let cell = document.createElement("div");
+    cell.className = "cell";
+
+    map.push({
+      owner: randomOwner()
+    });
+
+    m.appendChild(cell);
+  }
 }
 
-// ===== 存档 =====
-function save() {
-  localStorage.setItem("life_v22", JSON.stringify({
-    iq, money, health, chapter, NPC
-  }));
-  alert("已保存");
+// 🎲 随机国家
+function randomOwner() {
+  let r = Math.random();
+  if (r < 0.33) return "r";
+  if (r < 0.66) return "b";
+  return "g";
 }
 
-function load() {
-  let data = JSON.parse(localStorage.getItem("life_v22"));
-  if (!data) return;
+// ⚔️ 战争逻辑（核心🔥）
+function fight() {
 
-  iq = data.iq;
-  money = data.money;
-  health = data.health;
-  chapter = data.chapter;
-  NPC = data.NPC;
+  let a = ["red","blue","green"][Math.floor(Math.random()*3)];
+  let b = ["red","blue","green"][Math.floor(Math.random()*3)];
 
-  update();
-  updateChapter();
+  if (a === b) return;
+
+  let powerA = nations[a] + Math.random()*20;
+  let powerB = nations[b] + Math.random()*20;
+
+  if (powerA > powerB) {
+    nations[a] += 2;
+    nations[b] -= 2;
+    log(`${a} 击败 ${b}`);
+  } else {
+    nations[b] += 2;
+    nations[a] -= 2;
+    log(`${b} 击败 ${a}`);
+  }
 }
 
-// ===== 地图 =====
-function move(p) {
-  place = p;
-  document.getElementById("place").innerText = p;
+// 📜 战争日志
+function log(text) {
+  let log = document.getElementById("log");
+  log.innerHTML += `<p>⚔️ ${text}</p>`;
 
-  NPC.name = "NPC-" + Math.floor(Math.random() * 100);
+  if (log.children.length > 8) {
+    log.removeChild(log.children[0]);
+  }
 }
 
-// ===== 对话系统（升级版🔥）=====
-function talk() {
+// 🌍 世界推进（核心循环🔥）
+function tick() {
 
-  let base = [
-    "你还好吗？",
-    "这个世界有点奇怪",
-    "我记得你",
-    "你改变了一些东西"
-  ];
+  world.order += Math.random()*2 - 1;
+  world.chaos += Math.random()*2 - 1;
+  world.tech += Math.random()*1;
 
-  let msg = base[Math.floor(Math.random() * base.length)];
+  // ⚔️ 战争发生概率
+  for (let i = 0; i < 3; i++) {
+    if (Math.random() < 0.6) fight(); // 🔥 战争频率提高
+  }
 
-  // 情绪系统
-  if (NPC.love > 10) msg = "😊 " + msg;
-  if (NPC.love < -5) msg = "⚠ " + msg;
-
-  NPC.memory.push(msg);
-
-  document.getElementById("npc").innerText =
-    NPC.name + "：" + msg;
-
-  NPC.love += Math.random() * 6 - 2;
-
-  iq++;
-  money++;
-
-  update();
-  updateChapter();
+  // 🗺 地图扩张
+  updateMap();
+  updateUI();
 }
 
-// ===== UI =====
-function update() {
-  document.getElementById("iq").innerText = iq;
-  document.getElementById("money").innerText = money;
-  document.getElementById("health").innerText = health;
+// 🗺 地图更新
+function updateMap() {
+
+  let cells = document.getElementsByClassName("cell");
+
+  for (let i = 0; i < cells.length; i++) {
+
+    let r = Math.random();
+
+    if (r < 0.33) cells[i].className = "cell r";
+    else if (r < 0.66) cells[i].className = "cell b";
+    else cells[i].className = "cell g";
+  }
 }
 
-update();
+// 📊 UI
+function updateUI() {
+
+  document.getElementById("order").innerText = world.order.toFixed(1);
+  document.getElementById("chaos").innerText = world.chaos.toFixed(1);
+  document.getElementById("tech").innerText = world.tech.toFixed(1);
+
+  document.getElementById("red").innerText = nations.red;
+  document.getElementById("blue").innerText = nations.blue;
+  document.getElementById("green").innerText = nations.green;
+}
+
+// 初始化
+init();
+updateMap();
+updateUI();

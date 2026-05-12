@@ -2,53 +2,44 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>人生模拟器 V22</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V85 战争文明模拟器</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="topbar">🌍 V85 战争文明模拟器</div>
 
-<h1>🌌 人生RPG：章节系统版</h1>
+<div class="layout">
 
-<!-- 📖 章节 -->
-<div class="chapter">
-📘 当前章节：<span id="chapter">第一章：普通人生</span>
-</div>
+  <div class="map" id="map"></div>
 
-<!-- 🧠 状态 -->
-<div class="hud">
-🧠 <span id="iq">0</span> |
-💰 <span id="money">0</span> |
-❤️ <span id="health">100</span>
-</div>
+  <div class="side">
 
-<!-- 🗺️ 地图 -->
-<div class="map">
+    <div class="card">
+      <h3>🌍 世界状态</h3>
+      <p>秩序: <span id="order">50</span></p>
+      <p>混乱: <span id="chaos">50</span></p>
+      <p>科技: <span id="tech">50</span></p>
+    </div>
 
-<button onclick="move('school')">🏫 学校</button>
-<button onclick="move('company')">🏢 公司</button>
-<button onclick="move('street')">🌆 城市</button>
-<button onclick="move('secret')">🌌 隐藏区</button>
+    <div class="card">
+      <h3>🏛 国家力量</h3>
+      <p>红国: <span id="red">50</span></p>
+      <p>蓝国: <span id="blue">50</span></p>
+      <p>绿国: <span id="green">50</span></p>
+    </div>
 
-<p>📍 <span id="place">城市中心</span></p>
+    <div class="card">
+      <h3>⚔️ 战争日志</h3>
+      <div id="log"></div>
+    </div>
 
-</div>
+    <button onclick="tick()">▶ 推进世界</button>
 
-<!-- 👥 NPC -->
-<div class="card">
-<h2>👥 NPC互动</h2>
-<p id="npc">暂无NPC</p>
-<button onclick="talk()">💬 对话</button>
-</div>
+  </div>
 
-<!-- 💾 存档 -->
-<div class="card">
-<h2>💾 存档系统</h2>
-<button onclick="save()">保存</button>
-<button onclick="load()">读取</button>
 </div>
 
 <script src="script.js"></script>

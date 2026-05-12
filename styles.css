@@ -1,36 +1,57 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: #050814;
+  background: #050816;
   color: white;
+}
+
+.topbar {
   text-align: center;
+  padding: 8px;
+  background: #0b1b3a;
 }
 
-.bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, #1a2b4f, #050814);
-  z-index: -1;
+.layout {
+  display: flex;
+  height: 100vh;
 }
 
-.hud, .chapter {
-  margin: 10px;
+/* 🌍 战争地图 */
+.map {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 2px;
+  padding: 5px;
 }
 
-.map button {
-  margin: 5px;
+.cell {
+  background: rgba(255,255,255,0.05);
+}
+
+/* 国家颜色 */
+.r { background: #ff4d4d; }
+.b { background: #4da3ff; }
+.g { background: #4dff88; }
+
+.side {
+  flex: 1;
   padding: 10px;
-  border-radius: 10px;
-  background: #4da3ff;
-  border: none;
-  color: white;
 }
 
 .card {
-  width: 85%;
-  margin: 15px auto;
-  padding: 15px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #4da3ff;
+  border: none;
+  color: white;
+  border-radius: 10px;
 }
